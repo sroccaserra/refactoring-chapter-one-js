@@ -4,8 +4,8 @@ const plays = require('./plays.json');
 const invoice = require('./invoices')[0];
 const { statement, htmlStatement } = require('./statement');
 
-describe('statement', () => {
-  it('prints statement for first invoice', () => {
+describe('statement', function() {
+  it('prints statement for first invoice', function() {
       const expected = 'Statement for BigCo\n' +
         '  Hamlet: $650.00 (55 seats)\n' +
         '  As You Like It: $580.00 (35 seats)\n' +
@@ -18,8 +18,8 @@ describe('statement', () => {
     });
 });
 
-xdescribe('htmlStatement', () => {
-  it('prints statement for first invoice', () => {
+describe.skip('htmlStatement', function() {
+  it('prints statement for first invoice', function() {
       const expected = '<h1>Statement for BigCo</h1>\n' +
         '<table>\n' +
         '  <tr><th>play</th><th>seats</th><th>cost</th></tr>\n' +
