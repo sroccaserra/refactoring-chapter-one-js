@@ -11,8 +11,12 @@
                 "audience": 35
             },
             {
+                "playID": "much-ado",
+                "audience": 15
+            },
+            {
                 "playID": "othello",
-                "audience": 40
+                "audience": 20
             }
         ]
     }
