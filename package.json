@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "node statement.js",
+    "start": "node -e 'plays = require(\"./plays\"); invoice = require(\"./invoices\")[0]; const {statement} = require(\"./statement\"); console.log(statement(invoice, plays))'",
     "test": "mocha",
     "coverage": "nyc mocha"
   },
