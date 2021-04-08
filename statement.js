@@ -44,3 +44,10 @@ function statement (invoice, plays) {
   result += `You earned ${volumeCredits} credits\n`;
   return result;
 }
+
+if (require.main === module) {
+  const plays = require('./plays.json');
+  const invoice = require('./invoices')[0];
+
+  console.log(statement(invoice, plays));
+}
