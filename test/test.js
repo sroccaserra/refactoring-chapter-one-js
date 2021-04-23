@@ -1,8 +1,9 @@
 const { expect } = require('chai');
 
-const plays = require('./plays.json');
-const invoice = require('./invoices')[0];
-const { statement, htmlStatement } = require('./statement');
+const { statement, htmlStatement } = require('../src/statement');
+
+const plays = require('../plays.json');
+const invoice = require('../invoices.json')[0];
 
 describe('statement', function() {
   it('prints statement for first invoice', function() {
