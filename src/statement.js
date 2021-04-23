@@ -7,31 +7,36 @@ module.exports = {
 /**
  * @param {Invoice} invoice
  * @param {Object.<string, Play>} plays
- *
  * @returns {string}
  */
 function statement (invoice, plays) {
-  const statementData = {
-    customer: invoice.customer,
-    performances: invoice.performances.map(enrichPerformance),
-  };
-
+  const statementData = {};
+  statementData.customer = invoice.customer;
+  statementData.performances = invoice.performances.map(enrichPerformance);
   statementData.totalAmount = totalAmount(statementData);
 
   return renderPlainText(statementData);
 
-  ///
+  //////
 
+  /**
+   * @param {Performance} aPerformance
+   * @returns {PerformanceData}
+   */
   function enrichPerformance(aPerformance) {
-    const result = {
-      ...aPerformance,
-      play: playFor(aPerformance),
-      amount: amountFor(aPerformance),
-    }
+    const result = {};
+    result.playID = aPerformance.playID;
+    result.audience = aPerformance.audience;
+    result.play = playFor(aPerformance);
+    result.amount = amountFor(aPerformance);
 
     return result;
   }
 
+  /**
+   * @param {StatementData} data
+   * @returns {number}
+   */
   function totalAmount(data) {
     let result = 0;
     for (let perf of data.performances) {
@@ -41,10 +46,18 @@ function statement (invoice, plays) {
     return result;
   }
 
+  /**
+   * @param {Performance} aPerformance
+   * @returns {Play}
+   */
   function playFor(aPerformance) {
     return plays[aPerformance.playID];
   }
 
+  /**
+   * @param {Performance} aPerformance
+   * @returns {number}
+   */
   function amountFor(aPerformance) {
     let result = 0;
 
@@ -70,7 +83,25 @@ function statement (invoice, plays) {
   }
 }
 
-// Single responsibility: render
+/**
+ * @typedef {Object} StatementData
+ * @property {string} customer
+ * @property {PerformanceData[]} performances
+ * @property {number} totalAmount
+ */
+
+/**
+ * @typedef {Object} PerformanceData
+ * @property {string} playID
+ * @property {number} audience
+ * @property {Play} play
+ * @property {number} amount
+ */
+
+/**
+ * @param {StatementData} data
+ * @returns {string}
+ */
 function renderPlainText(data) {
   let result = `Statement for ${data.customer}\n`;
 
@@ -84,6 +115,9 @@ function renderPlainText(data) {
 
   ///////
 
+  /**
+   * @returns {number}
+   */
   function totalVolumeCredits() {
     let result = 0;
     for (let perf of data.performances) {
@@ -93,11 +127,15 @@ function renderPlainText(data) {
     return result;
   }
 
-  function volumeCreditsFor(perf) {
-    let result = Math.max(perf.audience - 30, 0);
+  /**
+   * @param {PerformanceData} aPerformance
+   * @returns {number}
+   */
+  function volumeCreditsFor(aPerformance) {
+    let result = Math.max(aPerformance.audience - 30, 0);
 
-    if ("comedy" === perf.play.type) {
-      result += Math.floor(perf.audience / 5);
+    if ("comedy" === aPerformance.play.type) {
+      result += Math.floor(aPerformance.audience / 5);
     }
 
     return result;
@@ -105,6 +143,10 @@ function renderPlainText(data) {
 
 }
 
+/**
+ * @param {number} aNumber - In cents
+ * @returns {string}
+ */
 function usd(aNumber) {
   const formatter = new Intl.NumberFormat("en-US",
     { style: "currency", currency: "USD",
