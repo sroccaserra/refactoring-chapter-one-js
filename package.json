@@ -5,17 +5,21 @@
   "scripts": {
     "start": "node -e 'plays = require(\"./plays\"); invoice = require(\"./invoices\")[0]; const {statement} = require(\"./statement\"); console.log(statement(invoice, plays))'",
     "test": "mocha",
-    "coverage": "nyc mocha"
+    "coverage": "nyc mocha",
+    "typecheck": "tsc"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/mocha": "^8.2.2",
+    "@types/node": "^14.14.41",
     "chai": "^4.3.4",
     "eslint": "^7.22.0",
     "eslint-plugin-mocha": "^8.1.0",
     "mocha": "^8.3.2",
-    "nyc": "^15.1.0"
+    "nyc": "^15.1.0",
+    "typescript": "^4.2.4"
   },
   "dependencies": {},
   "repository": {
