@@ -1,7 +1,32 @@
+// @ts-check
+
 module.exports = {
   statement,
 };
 
+/**
+ * @typedef {Object} Invoice
+ * @property {string} customer
+ * @property {Performance[]} performances
+ */
+
+/**
+ * @typedef {Object} Performance
+ * @property {string} playID
+ * @property {number} audience
+ */
+
+/**
+ * @typedef {Object} Play
+ * @property {string} type
+ */
+
+/**
+ * @param {Invoice} invoice
+ * @param {Play} plays
+ *
+ * @returns {string}
+ */
 function statement (invoice, plays) {
   let totalAmount = 0;
   let volumeCredits = 0;
